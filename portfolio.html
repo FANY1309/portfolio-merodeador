@@ -1,0 +1,953 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Estefanía Martínez Henríquez — Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=Cinzel+Decorative:wght@400;700&family=Almendra:ital,wght@0,400;0,700;1,400&family=MedievalSharp&display=swap" rel="stylesheet"/>
+  <style>
+    /* ─── RESET & ROOT ─────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --ink:       #2b1a0e;
+      --ink-light: #4a2e1a;
+      --parchment: #e8d5a3;
+      --parchment-dark: #c9b07a;
+      --parchment-aged: #d4bc85;
+      --seal-red:  #7a1c1c;
+      --seal-gold: #b8860b;
+      --stain:     rgba(43,26,14,0.12);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--ink);
+      font-family: 'IM Fell English', serif;
+      color: var(--ink);
+      overflow-x: hidden;
+      cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20'%3E%3Ccircle cx='10' cy='10' r='3' fill='%232b1a0e'/%3E%3C/svg%3E") 10 10, auto;
+    }
+
+    /* ─── NOISE / TEXTURE OVERLAY ─────────────────────── */
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.4'/%3E%3C/svg%3E");
+      opacity: 0.04;
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    /* ─── SEAL / INTRO SCREEN ─────────────────────────── */
+    #seal-screen {
+      position: fixed; inset: 0;
+      background: var(--ink);
+      display: flex; align-items: center; justify-content: center;
+      z-index: 1000;
+      transition: opacity 1.2s ease, transform 1.2s ease;
+    }
+    #seal-screen.vanish {
+      opacity: 0;
+      pointer-events: none;
+      transform: scale(1.05);
+    }
+
+    .seal-wrapper {
+      display: flex; flex-direction: column; align-items: center; gap: 2rem;
+      animation: sealBreath 3s ease-in-out infinite;
+    }
+    @keyframes sealBreath {
+      0%,100% { transform: scale(1); }
+      50%      { transform: scale(1.02); }
+    }
+
+    .seal-svg {
+      width: min(340px, 80vw);
+      filter: drop-shadow(0 0 30px rgba(184,134,11,0.5));
+    }
+
+    .seal-hint {
+      font-family: 'IM Fell English', serif;
+      font-style: italic;
+      color: var(--parchment-dark);
+      font-size: 0.95rem;
+      letter-spacing: 0.08em;
+      opacity: 0;
+      animation: fadeHint 1s ease 1.5s forwards;
+    }
+    @keyframes fadeHint {
+      to { opacity: 0.7; }
+    }
+
+    /* ─── MAIN SCROLL CONTAINER ───────────────────────── */
+    #map-container {
+      opacity: 0;
+      transition: opacity 1.5s ease;
+    }
+    #map-container.visible { opacity: 1; }
+
+    /* ─── PARCHMENT PAGE ──────────────────────────────── */
+    .parchment-page {
+      min-height: 100vh;
+      background:
+        radial-gradient(ellipse at 20% 20%, #f5e6c0 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 80%, #c9aa6e 0%, transparent 50%),
+        radial-gradient(ellipse at 50% 50%, #e2cc96 0%, transparent 70%),
+        linear-gradient(160deg, #efe0b0 0%, #d4bc80 40%, #c8a85c 100%);
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* aged stains */
+    .parchment-page::before {
+      content: '';
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 120px 80px at 10% 15%, rgba(43,26,14,0.18) 0%, transparent 70%),
+        radial-gradient(ellipse 90px 60px at 90% 70%, rgba(43,26,14,0.14) 0%, transparent 70%),
+        radial-gradient(ellipse 200px 120px at 60% 5%, rgba(122,60,10,0.10) 0%, transparent 70%),
+        radial-gradient(ellipse 150px 100px at 5% 85%, rgba(43,26,14,0.15) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    /* map border decorative lines */
+    .parchment-page::after {
+      content: '';
+      position: absolute; inset: 18px;
+      border: 2px solid rgba(43,26,14,0.35);
+      box-shadow: inset 0 0 0 6px rgba(43,26,14,0.08), inset 0 0 0 12px rgba(43,26,14,0.04);
+      pointer-events: none;
+    }
+
+    /* ─── DECORATIVE MAP CORNERS ──────────────────────── */
+    .corner-deco {
+      position: absolute;
+      width: 80px; height: 80px;
+      pointer-events: none;
+    }
+    .corner-deco svg { width: 100%; height: 100%; opacity: 0.6; }
+    .corner-deco.tl { top: 24px; left: 24px; }
+    .corner-deco.tr { top: 24px; right: 24px; transform: scaleX(-1); }
+    .corner-deco.bl { bottom: 24px; left: 24px; transform: scaleY(-1); }
+    .corner-deco.br { bottom: 24px; right: 24px; transform: scale(-1); }
+
+    /* ─── RUNNING MAP LINES (background grid) ─────────── */
+    .map-grid {
+      position: absolute; inset: 0;
+      background-image:
+        repeating-linear-gradient(0deg, transparent, transparent 59px, rgba(43,26,14,0.06) 59px, rgba(43,26,14,0.06) 60px),
+        repeating-linear-gradient(90deg, transparent, transparent 59px, rgba(43,26,14,0.06) 59px, rgba(43,26,14,0.06) 60px);
+      pointer-events: none;
+    }
+
+    /* ─── SECTIONS ────────────────────────────────────── */
+    section {
+      position: relative;
+      padding: 5rem 2rem;
+      max-width: 900px;
+      margin: 0 auto;
+      z-index: 1;
+    }
+
+    /* ─── HERO ────────────────────────────────────────── */
+    #hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      gap: 1.5rem;
+      padding-top: 4rem;
+    }
+
+    .messrs-line {
+      font-family: 'IM Fell English', serif;
+      font-style: italic;
+      font-size: clamp(0.75rem, 2vw, 1rem);
+      letter-spacing: 0.2em;
+      color: var(--ink-light);
+      opacity: 0;
+      animation: fadeUp 0.8s ease 0.3s forwards;
+    }
+
+    .hero-name {
+      font-family: 'Cinzel Decorative', cursive;
+      font-size: clamp(1.8rem, 6vw, 4rem);
+      line-height: 1.1;
+      color: var(--ink);
+      text-shadow: 2px 2px 0 rgba(43,26,14,0.15);
+      opacity: 0;
+      animation: fadeUp 0.8s ease 0.5s forwards;
+    }
+
+    .hero-subtitle {
+      font-family: 'Almendra', serif;
+      font-style: italic;
+      font-size: clamp(0.85rem, 2.5vw, 1.15rem);
+      color: var(--ink-light);
+      max-width: 480px;
+      line-height: 1.7;
+      opacity: 0;
+      animation: fadeUp 0.8s ease 0.7s forwards;
+    }
+
+    .scroll-ribbon {
+      font-family: 'IM Fell English', serif;
+      font-style: italic;
+      font-size: 0.8rem;
+      letter-spacing: 0.15em;
+      color: var(--ink-light);
+      opacity: 0;
+      animation: fadeUp 0.8s ease 1.2s forwards, bounce 2s ease 2s infinite;
+      margin-top: 1rem;
+    }
+    @keyframes bounce {
+      0%,100% { transform: translateY(0); }
+      50%      { transform: translateY(6px); }
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* decorative ribbon under hero title */
+    .ribbon-divider {
+      display: flex; align-items: center; gap: 1rem;
+      width: 100%;
+      max-width: 500px;
+      opacity: 0;
+      animation: fadeUp 0.8s ease 0.9s forwards;
+    }
+    .ribbon-divider::before, .ribbon-divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--ink-light), transparent);
+    }
+    .ribbon-divider span {
+      font-size: 1.2rem;
+      color: var(--ink-light);
+    }
+
+    /* ─── SECTION HEADERS (map location style) ─────────── */
+    .map-section-title {
+      font-family: 'Cinzel Decorative', cursive;
+      font-size: clamp(1.2rem, 3vw, 1.8rem);
+      color: var(--ink);
+      text-align: center;
+      margin-bottom: 0.5rem;
+      position: relative;
+    }
+    .map-section-title::before, .map-section-title::after {
+      content: '✦';
+      font-size: 0.8em;
+      margin: 0 0.5em;
+      color: var(--seal-gold);
+    }
+
+    .section-subline {
+      text-align: center;
+      font-family: 'IM Fell English', serif;
+      font-style: italic;
+      color: var(--ink-light);
+      font-size: 0.9rem;
+      margin-bottom: 3rem;
+      letter-spacing: 0.05em;
+    }
+
+    /* ─── LOCATION CARD (map room style) ──────────────── */
+    .location-card {
+      background: rgba(43,26,14,0.04);
+      border: 1.5px solid rgba(43,26,14,0.25);
+      padding: 1.8rem 2rem;
+      margin-bottom: 1.5rem;
+      position: relative;
+      transition: box-shadow 0.3s ease, transform 0.3s ease;
+    }
+    .location-card:hover {
+      box-shadow: 4px 4px 0 rgba(43,26,14,0.2);
+      transform: translate(-2px, -2px);
+    }
+    .location-card::before {
+      content: '';
+      position: absolute;
+      top: -1px; left: 12px; right: 12px;
+      height: 1px;
+      background: var(--seal-gold);
+      opacity: 0.5;
+    }
+
+    .card-location-tag {
+      font-family: 'IM Fell English', serif;
+      font-style: italic;
+      font-size: 0.75rem;
+      letter-spacing: 0.12em;
+      color: var(--seal-red);
+      text-transform: uppercase;
+      margin-bottom: 0.3rem;
+    }
+    .card-title {
+      font-family: 'Almendra', serif;
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: var(--ink);
+      margin-bottom: 0.5rem;
+    }
+    .card-period {
+      font-family: 'IM Fell English', serif;
+      font-style: italic;
+      font-size: 0.8rem;
+      color: var(--ink-light);
+      margin-bottom: 0.6rem;
+    }
+    .card-desc {
+      font-family: 'IM Fell English', serif;
+      font-size: 0.95rem;
+      line-height: 1.75;
+      color: var(--ink);
+    }
+
+    /* ─── SKILLS MAP (compass grid) ───────────────────── */
+    .skills-compass {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+      gap: 0.8rem;
+      margin-top: 2rem;
+    }
+    .skill-rune {
+      border: 1.5px solid rgba(43,26,14,0.3);
+      padding: 0.7rem 0.5rem;
+      text-align: center;
+      font-family: 'Almendra', serif;
+      font-size: 0.85rem;
+      color: var(--ink);
+      position: relative;
+      transition: all 0.25s ease;
+      background: rgba(43,26,14,0.03);
+    }
+    .skill-rune:hover {
+      background: rgba(43,26,14,0.1);
+      transform: scale(1.04);
+      box-shadow: 3px 3px 0 rgba(43,26,14,0.15);
+    }
+    .skill-rune::after {
+      content: '';
+      position: absolute;
+      bottom: 3px; left: 50%; transform: translateX(-50%);
+      width: 20px; height: 1px;
+      background: var(--seal-gold);
+      opacity: 0.6;
+    }
+
+    /* ─── CONTACT SECTION ─────────────────────────────── */
+    .contact-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      max-width: 420px;
+      margin: 0 auto;
+    }
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      border-bottom: 1px dashed rgba(43,26,14,0.25);
+      padding-bottom: 0.8rem;
+    }
+    .contact-icon {
+      font-size: 1.2rem;
+      width: 28px;
+      text-align: center;
+      color: var(--seal-red);
+    }
+    .contact-text {
+      font-family: 'IM Fell English', serif;
+      font-size: 0.95rem;
+      color: var(--ink);
+    }
+    .contact-text a {
+      color: var(--ink);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(43,26,14,0.3);
+      transition: border-color 0.2s;
+    }
+    .contact-text a:hover {
+      border-color: var(--seal-red);
+    }
+
+    /* ─── FOOTER INSCRIPTION ──────────────────────────── */
+    .map-footer {
+      text-align: center;
+      padding: 2rem;
+      font-family: 'IM Fell English', serif;
+      font-style: italic;
+      font-size: 0.78rem;
+      color: rgba(43,26,14,0.45);
+      letter-spacing: 0.08em;
+      border-top: 1px solid rgba(43,26,14,0.15);
+    }
+
+    /* ─── NAV ─────────────────────────────────────────── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: center;
+      gap: 0.3rem;
+      padding: 0.7rem 1rem;
+      background: rgba(43,26,14,0.92);
+      backdrop-filter: blur(4px);
+    }
+    nav a {
+      font-family: 'IM Fell English', serif;
+      font-style: italic;
+      color: var(--parchment-dark);
+      text-decoration: none;
+      font-size: 0.8rem;
+      letter-spacing: 0.1em;
+      padding: 0.3rem 0.8rem;
+      border: 1px solid transparent;
+      transition: all 0.2s ease;
+    }
+    nav a:hover {
+      border-color: var(--seal-gold);
+      color: var(--parchment);
+    }
+    nav .sep {
+      color: rgba(184,134,11,0.5);
+      display: flex; align-items: center;
+      font-size: 0.7rem;
+    }
+
+    /* ─── SECTION SEPARATOR ───────────────────────────── */
+    .map-separator {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin: 0 auto 3rem;
+      max-width: 600px;
+      opacity: 0.5;
+    }
+    .map-separator::before, .map-separator::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: repeating-linear-gradient(90deg, var(--ink-light) 0, var(--ink-light) 4px, transparent 4px, transparent 8px);
+    }
+    .map-separator-icon {
+      font-size: 1rem;
+      color: var(--ink-light);
+    }
+
+    /* ─── SCROLL REVEAL ───────────────────────────────── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ─── FOOTSTEP TRAIL ──────────────────────────────── */
+    .footstep {
+      position: fixed;
+      pointer-events: none;
+      font-size: 14px;
+      opacity: 0;
+      z-index: 9998;
+      color: var(--ink-light);
+      transition: opacity 0.1s;
+      animation: fadeFootstep 1.5s ease forwards;
+      transform-origin: center;
+    }
+    @keyframes fadeFootstep {
+      0%   { opacity: 0.5; transform: scale(1); }
+      100% { opacity: 0;   transform: scale(0.5) translateY(-10px); }
+    }
+
+    /* ─── TWO-COL GRID ────────────────────────────────── */
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.2rem;
+    }
+    @media (max-width: 640px) {
+      .two-col { grid-template-columns: 1fr; }
+      nav a { font-size: 0.65rem; padding: 0.2rem 0.4rem; }
+    }
+
+    /* ─── ABOUT BLOCK ─────────────────────────────────── */
+    .about-text {
+      font-family: 'IM Fell English', serif;
+      font-size: 1.05rem;
+      line-height: 1.9;
+      color: var(--ink);
+      text-align: justify;
+      text-indent: 2em;
+      max-width: 680px;
+      margin: 0 auto;
+    }
+    .about-text strong {
+      font-family: 'Almendra', serif;
+      font-weight: 700;
+    }
+
+    /* ─── INLINE STAMP ────────────────────────────────── */
+    .stamp {
+      display: inline-block;
+      border: 2px solid var(--seal-red);
+      color: var(--seal-red);
+      font-family: 'Almendra', serif;
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      padding: 0.15rem 0.5rem;
+      transform: rotate(-2deg);
+      opacity: 0.8;
+      vertical-align: middle;
+      margin-left: 0.3em;
+    }
+
+    /* map dotted paths between sections */
+    .path-dots {
+      text-align: center;
+      letter-spacing: 0.5em;
+      color: rgba(43,26,14,0.3);
+      font-size: 0.7rem;
+      margin: 0.5rem 0;
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════
+     SEAL INTRO SCREEN
+══════════════════════════════════════════════════ -->
+<div id="seal-screen">
+  <div class="seal-wrapper">
+    <!-- SVG Seal inspired by the Marauder's Map -->
+    <svg class="seal-svg" viewBox="0 0 340 340" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <radialGradient id="sealGrad" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#c8a044"/>
+          <stop offset="60%" stop-color="#8b5e0a"/>
+          <stop offset="100%" stop-color="#3a1a00"/>
+        </radialGradient>
+        <filter id="roughen">
+          <feTurbulence type="turbulence" baseFrequency="0.04" numOctaves="3" result="noise"/>
+          <feDisplacementMap in="SourceGraphic" in2="noise" scale="3" xChannelSelector="R" yChannelSelector="G"/>
+        </filter>
+      </defs>
+
+      <!-- Outer decorative ring -->
+      <circle cx="170" cy="170" r="155" fill="none" stroke="#b8860b" stroke-width="1.5" stroke-dasharray="4 3" opacity="0.6"/>
+      <circle cx="170" cy="170" r="148" fill="none" stroke="#8b6000" stroke-width="0.8" opacity="0.4"/>
+
+      <!-- Main seal body -->
+      <circle cx="170" cy="170" r="138" fill="url(#sealGrad)" filter="url(#roughen)"/>
+      <circle cx="170" cy="170" r="138" fill="none" stroke="#c8a044" stroke-width="2.5"/>
+      <circle cx="170" cy="170" r="128" fill="none" stroke="#8b5e0a" stroke-width="1"/>
+
+      <!-- Decorative compass points -->
+      <g stroke="#c8a044" stroke-width="1.5" opacity="0.7">
+        <line x1="170" y1="32" x2="170" y2="52"/>
+        <line x1="170" y1="288" x2="170" y2="308"/>
+        <line x1="32" y1="170" x2="52" y2="170"/>
+        <line x1="288" y1="170" x2="308" y2="170"/>
+        <polygon points="170,26 165,42 170,38 175,42" fill="#c8a044"/>
+        <polygon points="170,314 165,298 170,302 175,298" fill="#c8a044"/>
+        <polygon points="26,170 42,165 38,170 42,175" fill="#c8a044"/>
+        <polygon points="314,170 298,165 302,170 298,175" fill="#c8a044"/>
+      </g>
+
+      <!-- Inner wax texture circles -->
+      <circle cx="170" cy="170" r="110" fill="none" stroke="#5c3000" stroke-width="0.5" opacity="0.4"/>
+      <circle cx="170" cy="170" r="95"  fill="none" stroke="#5c3000" stroke-width="0.5" opacity="0.3"/>
+
+      <!-- Circular text path — top -->
+      <path id="topArc" d="M 55,170 A 115,115 0 0,1 285,170" fill="none"/>
+      <text font-family="'IM Fell English', serif" font-style="italic" font-size="11" fill="#f0d080" letter-spacing="3">
+        <textPath href="#topArc" startOffset="8%">Itinerarium Maraude­ntium  ✦  Itinerarium Maraude­ntium</textPath>
+      </text>
+
+      <!-- Circular text path — bottom -->
+      <path id="botArc" d="M 55,170 A 115,115 0 0,0 285,170" fill="none"/>
+      <text font-family="'IM Fell English', serif" font-style="italic" font-size="10" fill="#d4a030" letter-spacing="2">
+        <textPath href="#botArc" startOffset="10%">Est Marauder  ✦  Est Audere  ✦  Est Maraude­re</textPath>
+      </text>
+
+      <!-- Central name text -->
+      <text x="170" y="148" text-anchor="middle"
+            font-family="'Cinzel Decorative', cursive" font-size="13.5"
+            fill="#f5e0a0" letter-spacing="1">ESTEFANÍA</text>
+      <text x="170" y="168" text-anchor="middle"
+            font-family="'Cinzel Decorative', cursive" font-size="13.5"
+            fill="#f5e0a0" letter-spacing="1">MARTÍNEZ</text>
+      <text x="170" y="188" text-anchor="middle"
+            font-family="'Cinzel Decorative', cursive" font-size="13.5"
+            fill="#f5e0a0" letter-spacing="1">HENRÍQUEZ</text>
+
+      <!-- Divider lines around name -->
+      <line x1="80" y1="134" x2="260" y2="134" stroke="#b8860b" stroke-width="0.8" opacity="0.6"/>
+      <line x1="80" y1="198" x2="260" y2="198" stroke="#b8860b" stroke-width="0.8" opacity="0.6"/>
+      <text x="170" y="215" text-anchor="middle"
+            font-family="'IM Fell English', serif" font-style="italic" font-size="9"
+            fill="#c8a044" letter-spacing="2">Desarrolladora Web</text>
+
+      <!-- Corner flourishes inside seal -->
+      <g fill="none" stroke="#c8a044" stroke-width="1" opacity="0.45">
+        <path d="M110,110 Q115,105 120,110 Q115,115 110,110"/>
+        <path d="M230,110 Q225,105 220,110 Q225,115 230,110"/>
+        <path d="M110,230 Q115,235 120,230 Q115,225 110,230"/>
+        <path d="M230,230 Q225,235 220,230 Q225,225 230,230"/>
+      </g>
+
+      <!-- Outer flourish rings -->
+      <g opacity="0.25" fill="none" stroke="#c8a044" stroke-width="1">
+        <circle cx="170" cy="170" r="160"/>
+        <circle cx="170" cy="170" r="163"/>
+      </g>
+    </svg>
+
+    <p class="seal-hint">— Toca para revelar el mapa —</p>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     NAVIGATION
+══════════════════════════════════════════════════ -->
+<nav id="main-nav" style="opacity:0; transition: opacity 0.8s ease;">
+  <a href="#sobre-mi">Sobre mí</a>
+  <span class="sep">✦</span>
+  <a href="#proyectos">Proyectos</a>
+  <span class="sep">✦</span>
+  <a href="#formacion">Formación</a>
+  <span class="sep">✦</span>
+  <a href="#habilidades">Habilidades</a>
+  <span class="sep">✦</span>
+  <a href="#contacto">Contacto</a>
+</nav>
+
+<!-- ══════════════════════════════════════════════
+     MAP CONTAINER
+══════════════════════════════════════════════════ -->
+<div id="map-container">
+  <div class="parchment-page">
+    <div class="map-grid"></div>
+
+    <!-- Corner decorations -->
+    <div class="corner-deco tl">
+      <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M5,5 L35,5 M5,5 L5,35" stroke="#2b1a0e" stroke-width="2"/>
+        <path d="M5,5 Q20,5 20,20 Q20,35 35,35" stroke="#2b1a0e" stroke-width="1" fill="none"/>
+        <circle cx="5" cy="5" r="3" fill="#2b1a0e"/>
+        <path d="M12,12 L28,12 M12,12 L12,28" stroke="#2b1a0e" stroke-width="1" opacity="0.5"/>
+        <text x="40" y="18" font-family="serif" font-size="9" fill="#2b1a0e" opacity="0.4">N</text>
+        <path d="M42,22 L42,8 M39,11 L42,8 L45,11" stroke="#2b1a0e" stroke-width="1" fill="none" opacity="0.4"/>
+      </svg>
+    </div>
+    <div class="corner-deco tr">
+      <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M5,5 L35,5 M5,5 L5,35" stroke="#2b1a0e" stroke-width="2"/>
+        <path d="M5,5 Q20,5 20,20 Q20,35 35,35" stroke="#2b1a0e" stroke-width="1" fill="none"/>
+        <circle cx="5" cy="5" r="3" fill="#2b1a0e"/>
+      </svg>
+    </div>
+    <div class="corner-deco bl">
+      <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M5,5 L35,5 M5,5 L5,35" stroke="#2b1a0e" stroke-width="2"/>
+        <path d="M5,5 Q20,5 20,20 Q20,35 35,35" stroke="#2b1a0e" stroke-width="1" fill="none"/>
+        <circle cx="5" cy="5" r="3" fill="#2b1a0e"/>
+      </svg>
+    </div>
+    <div class="corner-deco br">
+      <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M5,5 L35,5 M5,5 L5,35" stroke="#2b1a0e" stroke-width="2"/>
+        <path d="M5,5 Q20,5 20,20 Q20,35 35,35" stroke="#2b1a0e" stroke-width="1" fill="none"/>
+        <circle cx="5" cy="5" r="3" fill="#2b1a0e"/>
+      </svg>
+    </div>
+
+    <!-- ── HERO ──────────────────────────────────── -->
+    <section id="hero">
+
+      <!-- Inline SVG of Hogwarts-ish castle sketch -->
+      <svg viewBox="0 0 320 90" xmlns="http://www.w3.org/2000/svg"
+           style="width:min(320px,80vw); opacity:0.35; margin-bottom:0.5rem;">
+        <!-- castle silhouette drawn in ink style -->
+        <g stroke="#2b1a0e" stroke-width="1.2" fill="none">
+          <!-- battlements -->
+          <polyline points="10,80 10,50 20,50 20,40 30,40 30,50 50,50 50,30 60,30 60,50 80,50 80,40 90,40 90,50 100,50 100,80"/>
+          <polyline points="100,80 100,45 115,45 115,25 130,25 130,45 150,45 150,20 165,15 180,20 180,45 200,45 200,25 215,25 215,45 230,45 230,80"/>
+          <polyline points="230,80 230,50 240,50 240,40 250,40 250,50 270,50 270,35 280,35 280,50 300,50 300,80"/>
+          <!-- towers with flags -->
+          <line x1="60" y1="30" x2="60" y2="8"/>
+          <polyline points="60,8 72,12 60,16"/>
+          <line x1="165" y1="15" x2="165" y2="0"/>
+          <polyline points="165,0 177,4 165,8"/>
+          <line x1="280" y1="35" x2="280" y2="15"/>
+          <polyline points="280,15 292,19 280,23"/>
+          <!-- windows -->
+          <rect x="54" y="34" width="5" height="7" rx="2"/>
+          <rect x="158" y="28" width="5" height="7" rx="2"/>
+          <rect x="274" y="39" width="5" height="7" rx="2"/>
+          <!-- ground line -->
+          <line x1="0" y1="80" x2="320" y2="80" stroke-width="1.5"/>
+          <!-- trees -->
+          <path d="M15,80 Q12,68 15,60 Q18,68 15,80" fill="rgba(43,26,14,0.25)"/>
+          <path d="M305,80 Q302,65 305,55 Q308,65 305,80" fill="rgba(43,26,14,0.25)"/>
+        </g>
+      </svg>
+
+      <p class="messrs-line">— Desarrolladora Web Junior —</p>
+
+      <h1 class="hero-name">Estefanía<br/>Martínez Henríquez</h1>
+
+      <div class="ribbon-divider"><span>✦</span></div>
+
+      <p class="hero-subtitle">
+        Código escrito con tinta invisible, desplegado en producción.<br/>
+        <em>Full-stack · Responsive · Orientada al detalle</em>
+      </p>
+
+      <p class="scroll-ribbon">↓ &nbsp; Despliega el mapa &nbsp; ↓</p>
+    </section>
+
+    <!-- ── SOBRE MÍ ───────────────────────────────── -->
+    <section id="sobre-mi">
+      <div class="map-separator"><span class="map-separator-icon">⊕</span></div>
+
+      <h2 class="map-section-title reveal">Sobre la Cartógrafa</h2>
+      <p class="section-subline reveal">— Cámara de los Secretos Profesionales —</p>
+
+      <p class="about-text reveal">
+        Desarrolladora Web Junior con <strong>proyectos reales en producción</strong> y sólida experiencia en liderazgo de equipos y atención al cliente. Combino habilidades técnicas con comunicación efectiva, pensamiento analítico y fuerte orientación al aprendizaje continuo.
+        <span class="stamp">En activo</span>
+      </p>
+
+      <div class="path-dots">· · · · · · · · · · · · · · · · · ·</div>
+
+      <!-- mini ink compass -->
+      <svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg"
+           style="display:block; margin:1.5rem auto; width:80px; opacity:0.4;">
+        <circle cx="60" cy="60" r="55" fill="none" stroke="#2b1a0e" stroke-width="1.5" stroke-dasharray="3 3"/>
+        <circle cx="60" cy="60" r="45" fill="none" stroke="#2b1a0e" stroke-width="0.8"/>
+        <line x1="60" y1="15" x2="60" y2="105" stroke="#2b1a0e" stroke-width="1"/>
+        <line x1="15" y1="60" x2="105" y2="60" stroke="#2b1a0e" stroke-width="1"/>
+        <polygon points="60,18 56,40 60,36 64,40" fill="#7a1c1c"/>
+        <polygon points="60,102 56,80 60,84 64,80" fill="#2b1a0e"/>
+        <circle cx="60" cy="60" r="5" fill="#2b1a0e"/>
+        <text x="60" y="10" text-anchor="middle" font-family="serif" font-size="9" fill="#2b1a0e">N</text>
+        <text x="60" y="116" text-anchor="middle" font-family="serif" font-size="9" fill="#2b1a0e">S</text>
+        <text x="8"  y="63" text-anchor="middle" font-family="serif" font-size="9" fill="#2b1a0e">W</text>
+        <text x="113" y="63" text-anchor="middle" font-family="serif" font-size="9" fill="#2b1a0e">E</text>
+      </svg>
+    </section>
+
+    <!-- ── PROYECTOS ──────────────────────────────── -->
+    <section id="proyectos">
+      <div class="map-separator"><span class="map-separator-icon">⊕</span></div>
+
+      <h2 class="map-section-title reveal">Expediciones & Proyectos</h2>
+      <p class="section-subline reveal">— Pasadizos Secretos del Conocimiento —</p>
+
+      <div class="location-card reveal">
+        <p class="card-location-tag">📍 CONSULTING GATECA S.L. · Prácticas FCT · 370h</p>
+        <h3 class="card-title">IMAGINARQUIA — Web Corporativa en Producción</h3>
+        <p class="card-period">imaginarquia.es</p>
+        <p class="card-desc">
+          Desarrollo íntegro de la web corporativa: análisis, diseño, maquetación responsive, integración de formularios, optimización SEO y despliegue en producción. Un proyecto de principio a fin, conjurado desde cero.
+        </p>
+      </div>
+
+      <div class="location-card reveal">
+        <p class="card-location-tag">📍 Proyecto CAT-U · 2022</p>
+        <h3 class="card-title">Landing Page Interactiva & Juego Web</h3>
+        <p class="card-period">HTML · CSS · JavaScript · Metodología Agile</p>
+        <p class="card-desc">
+          Diseño y desarrollo de una landing page interactiva y un juego web, participando en todas las fases del proyecto bajo metodología Agile. Magia práctica con tecnologías del lado del cliente.
+        </p>
+      </div>
+    </section>
+
+    <!-- ── EXPERIENCIA ────────────────────────────── -->
+    <section id="experiencia">
+      <div class="map-separator"><span class="map-separator-icon">⊕</span></div>
+
+      <h2 class="map-section-title reveal">Experiencia en el Mundo</h2>
+      <p class="section-subline reveal">— Registros del Gran Salón —</p>
+
+      <div class="two-col">
+        <div class="location-card reveal">
+          <p class="card-location-tag">📍 La Casa de las Carcasas · Actualidad</p>
+          <h3 class="card-title">Store Manager</h3>
+          <p class="card-desc">Liderazgo de equipos, seguimiento de KPI, resolución de incidencias y orientación a objetivos.</p>
+        </div>
+
+        <div class="location-card reveal">
+          <p class="card-location-tag">📍 KIKO Milano · 2018</p>
+          <h3 class="card-title">Beauty Assistant & Makeup Artist</h3>
+          <p class="card-desc">Asesoramiento personalizado, identificación de necesidades, trabajo en equipo y consecución de objetivos comerciales.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── FORMACIÓN ───────────────────────────────── -->
+    <section id="formacion">
+      <div class="map-separator"><span class="map-separator-icon">⊕</span></div>
+
+      <h2 class="map-section-title reveal">Pergaminos & Formación</h2>
+      <p class="section-subline reveal">— Biblioteca de los Conocimientos Adquiridos —</p>
+
+      <div class="two-col">
+        <div class="location-card reveal">
+          <p class="card-location-tag">🎓 IES El Rincón · 2023–2026</p>
+          <h3 class="card-title">CFGS Desarrollo de Aplicaciones Web</h3>
+          <p class="card-desc">Desarrollo full-stack, bases de datos relacionales, diseño de interfaces y trabajo colaborativo con Git y GitHub.</p>
+        </div>
+
+        <div class="location-card reveal">
+          <p class="card-location-tag">🎓 EOI · 224 horas</p>
+          <h3 class="card-title">Introducción a la Programación Web con JavaScript</h3>
+          <p class="card-desc">HTML, CSS, JavaScript, consumo de APIs, Git, entornos Linux (WSL) y despliegue en Netlify.</p>
+        </div>
+      </div>
+
+      <!-- Language badges -->
+      <div style="display:flex; gap:1rem; justify-content:center; margin-top:1.5rem; flex-wrap:wrap;" class="reveal">
+        <div class="skill-rune" style="min-width:120px;">🇬🇧 Inglés B2</div>
+        <div class="skill-rune" style="min-width:120px;">🇫🇷 Francés A2</div>
+      </div>
+    </section>
+
+    <!-- ── HABILIDADES ─────────────────────────────── -->
+    <section id="habilidades">
+      <div class="map-separator"><span class="map-separator-icon">⊕</span></div>
+
+      <h2 class="map-section-title reveal">Arsenal de Hechizos</h2>
+      <p class="section-subline reveal">— Runas & Herramientas del Oficio —</p>
+
+      <div class="skills-compass reveal">
+        <div class="skill-rune">HTML</div>
+        <div class="skill-rune">CSS</div>
+        <div class="skill-rune">JavaScript</div>
+        <div class="skill-rune">PHP</div>
+        <div class="skill-rune">Java</div>
+        <div class="skill-rune">Python</div>
+        <div class="skill-rune">MySQL</div>
+        <div class="skill-rune">Git</div>
+        <div class="skill-rune">GitHub</div>
+        <div class="skill-rune">Figma</div>
+        <div class="skill-rune">Bootstrap</div>
+        <div class="skill-rune">VS Code</div>
+        <div class="skill-rune">Linux WSL</div>
+        <div class="skill-rune">IA & Codex</div>
+      </div>
+    </section>
+
+    <!-- ── CONTACTO ───────────────────────────────── -->
+    <section id="contacto">
+      <div class="map-separator"><span class="map-separator-icon">⊕</span></div>
+
+      <h2 class="map-section-title reveal">Envía un Mensaje por Lechuza</h2>
+      <p class="section-subline reveal">— Garabatos de Contacto —</p>
+
+      <div class="contact-list reveal">
+        <div class="contact-item">
+          <span class="contact-icon">✉</span>
+          <span class="contact-text">
+            <a href="mailto:estefania.marhen@gmail.com">estefania.marhen@gmail.com</a>
+          </span>
+        </div>
+        <div class="contact-item">
+          <span class="contact-icon">☎</span>
+          <span class="contact-text">682 812 311</span>
+        </div>
+        <div class="contact-item">
+          <span class="contact-icon">⌥</span>
+          <span class="contact-text">
+            <a href="https://github.com/FANY1309" target="_blank">github.com/FANY1309</a>
+          </span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <div class="map-footer">
+      Messrs. Estefanía Martínez Henríquez est Maraude­re — Est Audere — Est Maraudere<br/>
+      <em>Mischief Managed.</em>
+    </div>
+
+  </div><!-- /parchment-page -->
+</div><!-- /map-container -->
+
+<!-- ══════════════════════════════════════════════
+     JAVASCRIPT
+══════════════════════════════════════════════════ -->
+<script>
+  /* ── SEAL OPEN ─────────────────────────────── */
+  const sealScreen = document.getElementById('seal-screen');
+  const mapContainer = document.getElementById('map-container');
+  const mainNav = document.getElementById('main-nav');
+
+  function openMap() {
+    sealScreen.classList.add('vanish');
+    mapContainer.classList.add('visible');
+    mainNav.style.opacity = '1';
+    setTimeout(() => { sealScreen.style.display = 'none'; }, 1400);
+  }
+
+  sealScreen.addEventListener('click', openMap);
+  sealScreen.addEventListener('keydown', e => { if(e.key === 'Enter' || e.key === ' ') openMap(); });
+
+  /* ── SCROLL REVEAL ─────────────────────────── */
+  const reveals = document.querySelectorAll('.reveal');
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 80);
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+
+  reveals.forEach(el => revealObserver.observe(el));
+
+  /* ── FOOTSTEP TRAIL ────────────────────────── */
+  let stepCount = 0;
+  const footSymbols = ['·', '∙', '•', '◦'];
+  document.addEventListener('mousemove', (e) => {
+    stepCount++;
+    if (stepCount % 8 !== 0) return;
+    const dot = document.createElement('span');
+    dot.className = 'footstep';
+    dot.textContent = footSymbols[Math.floor(Math.random() * footSymbols.length)];
+    dot.style.left = e.clientX + 'px';
+    dot.style.top  = e.clientY + 'px';
+    document.body.appendChild(dot);
+    setTimeout(() => dot.remove(), 1500);
+  });
+
+  /* ── ACTIVE NAV ────────────────────────────── */
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('nav a');
+
+  const navObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        navLinks.forEach(a => a.style.borderColor = 'transparent');
+        const active = document.querySelector(`nav a[href="#${entry.target.id}"]`);
+        if (active) active.style.borderColor = 'var(--seal-gold)';
+      }
+    });
+  }, { rootMargin: '-40% 0px -40% 0px' });
+
+  sections.forEach(s => navObserver.observe(s));
+</script>
+</body>
+</html>
