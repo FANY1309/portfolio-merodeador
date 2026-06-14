@@ -46,28 +46,28 @@ function SealScreen({ isOpen, onOpen }) {
           <circle cx="170" cy="170" r="95" fill="none" stroke="#5c3000" strokeWidth="0.5" opacity="0.3" />
 
           <path id="topArc" d="M 55,170 A 115,115 0 0,1 285,170" fill="none" />
-          <text fontFamily="'IM Fell English', serif" fontStyle="italic" fontSize="11" fill="#f0d080" letterSpacing="3">
+          <text fontFamily="'IM Fell English', serif" fontStyle="italic" fontSize="13.5" fill="#f7d98a" stroke="#1b0d05" strokeWidth="0.6" paintOrder="stroke" letterSpacing="2">
             <textPath href="#topArc" startOffset="8%">Portfolio Profesional  ✦  Desarrollo Web Junior</textPath>
           </text>
 
           <path id="botArc" d="M 55,170 A 115,115 0 0,0 285,170" fill="none" />
-          <text fontFamily="'IM Fell English', serif" fontStyle="italic" fontSize="10" fill="#d4a030" letterSpacing="2">
+          <text fontFamily="'IM Fell English', serif" fontStyle="italic" fontSize="12.5" fill="#f0c766" stroke="#1b0d05" strokeWidth="0.55" paintOrder="stroke" letterSpacing="1.25">
             <textPath href="#botArc" startOffset="10%">Responsive  ✦  Producción  ✦  Aprendizaje Continuo</textPath>
           </text>
 
-          <text x="170" y="148" textAnchor="middle" fontFamily="'Cinzel Decorative', cursive" fontSize="13.5" fill="#f5e0a0" letterSpacing="1">
+          <text x="170" y="143" textAnchor="middle" fontFamily="'Cinzel Decorative', cursive" fontSize="19.5" fill="#ffe08a" stroke="#120804" strokeWidth="1.8" paintOrder="stroke" letterSpacing="0.35">
             ESTEFANÍA
           </text>
-          <text x="170" y="168" textAnchor="middle" fontFamily="'Cinzel Decorative', cursive" fontSize="13.5" fill="#f5e0a0" letterSpacing="1">
+          <text x="170" y="170" textAnchor="middle" fontFamily="'Cinzel Decorative', cursive" fontSize="19.5" fill="#ffe08a" stroke="#120804" strokeWidth="1.8" paintOrder="stroke" letterSpacing="0.35">
             MARTÍNEZ
           </text>
-          <text x="170" y="188" textAnchor="middle" fontFamily="'Cinzel Decorative', cursive" fontSize="13.5" fill="#f5e0a0" letterSpacing="1">
+          <text x="170" y="197" textAnchor="middle" fontFamily="'Cinzel Decorative', cursive" fontSize="19.5" fill="#ffe08a" stroke="#120804" strokeWidth="1.8" paintOrder="stroke" letterSpacing="0.35">
             HENRÍQUEZ
           </text>
 
-          <line x1="80" y1="134" x2="260" y2="134" stroke="#b8860b" strokeWidth="0.8" opacity="0.6" />
-          <line x1="80" y1="198" x2="260" y2="198" stroke="#b8860b" strokeWidth="0.8" opacity="0.6" />
-          <text x="170" y="215" textAnchor="middle" fontFamily="'IM Fell English', serif" fontStyle="italic" fontSize="9" fill="#c8a044" letterSpacing="2">
+          <line x1="64" y1="124" x2="276" y2="124" stroke="#b8860b" strokeWidth="1.1" opacity="0.78" />
+          <line x1="64" y1="209" x2="276" y2="209" stroke="#b8860b" strokeWidth="1.1" opacity="0.78" />
+          <text x="170" y="232" textAnchor="middle" fontFamily="'IM Fell English', serif" fontStyle="italic" fontSize="13" fill="#f7d98a" stroke="#120804" strokeWidth="0.9" paintOrder="stroke" letterSpacing="1.35">
             Desarrolladora Web
           </text>
 

@@ -1,4 +1,4 @@
-function LocationCard({ tag, title, period, description, marker = '📍' }) {
+function LocationCard({ tag, title, period, description, marker = '📍', url, linkLabel = 'Ver proyecto' }) {
   return (
     <div className="location-card reveal">
       <p className="card-location-tag">
@@ -7,6 +7,11 @@ function LocationCard({ tag, title, period, description, marker = '📍' }) {
       <h3 className="card-title">{title}</h3>
       {period && <p className="card-period">{period}</p>}
       <p className="card-desc">{description}</p>
+      {url && (
+        <a className="project-seal-link" href={url} target="_blank" rel="noreferrer">
+          {linkLabel}
+        </a>
+      )}
     </div>
   );
 }

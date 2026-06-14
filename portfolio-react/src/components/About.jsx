@@ -9,8 +9,7 @@ function About() {
       <p className="section-subline reveal">— Desarrollo web, comunicación y orientación a resultados —</p>
 
       <p className="about-text reveal">
-        Desarrolladora Web Junior con <strong>proyectos reales en producción</strong> y sólida experiencia en liderazgo de equipos y atención al cliente. Combino habilidades técnicas con comunicación efectiva, pensamiento analítico y una fuerte orientación al aprendizaje continuo.
-        <span className="stamp">En activo</span>
+        Desarrolladora Web Junior con experiencia en el desarrollo completo de aplicaciones y sitios web, participando en todas las fases del proyecto: análisis, diseño, implementación, pruebas y despliegue. Mi experiencia previa en gestión de equipos y atención al cliente me ha permitido desarrollar habilidades de comunicación, organización y liderazgo que aportan valor al trabajo técnico. Soy una persona curiosa, resolutiva y con gran capacidad de aprendizaje, acostumbrada a afrontar nuevos retos y a buscar soluciones de forma autónoma.
       </p>
 
       <div className="path-dots">· · · · · · · · · · · · · · · · · ·</div>

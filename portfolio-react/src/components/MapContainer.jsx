@@ -17,9 +17,9 @@ function MapContainer({ isOpen }) {
         <Hero />
         <About />
         <Projects />
-        <Experience />
         <Education />
         <Skills />
+        <Experience />
         <Contact />
         <Footer />
       </div>

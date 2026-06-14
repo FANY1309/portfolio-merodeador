@@ -11,6 +11,8 @@ export const projects = [
     tag: 'CONSULTING GATECA S.L. · Prácticas FCT · 370h',
     title: 'IMAGINARQUIA — Web Corporativa en Producción',
     period: 'imaginarquia.es',
+    url: 'https://imaginarquia.es/',
+    linkLabel: 'Ver web corporativa',
     description:
       'Desarrollo integral de la web corporativa: análisis, diseño de interfaz, maquetación responsive, integración de formularios, optimización SEO y despliegue en producción.',
   },
@@ -70,4 +72,14 @@ export const skills = [
   'VS Code',
   'Linux WSL',
   'IA & Codex',
+];
+
+export const softSkills = [
+  'Pensamiento analítico',
+  'Resolución de problemas',
+  'Aprendizaje rápido',
+  'Comunicación efectiva',
+  'Trabajo en equipo',
+  'Proactividad',
+  'Organización y gestión del tiempo',
 ];
