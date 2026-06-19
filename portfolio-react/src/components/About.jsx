@@ -5,7 +5,9 @@ function About() {
     <section id="sobre-mi">
       <SectionSeparator />
 
-      <h2 className="map-section-title reveal">Perfil Profesional</h2>
+      <h2 className="map-section-title long-section-title reveal">
+        <span>Perfil Profesional</span>
+      </h2>
       <p className="section-subline reveal">— Desarrollo web, comunicación y orientación a resultados —</p>
 
       <p className="about-text reveal">

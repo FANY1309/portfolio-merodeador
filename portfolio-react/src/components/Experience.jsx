@@ -7,7 +7,9 @@ function Experience() {
     <section id="experiencia">
       <SectionSeparator />
 
-      <h2 className="map-section-title reveal">Experiencia Profesional</h2>
+      <h2 className="map-section-title long-section-title reveal">
+        <span>Experiencia Profesional</span>
+      </h2>
       <p className="section-subline reveal">— Gestión de equipos, atención al cliente y orientación a objetivos —</p>
 
       <div className="two-col">

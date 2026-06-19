@@ -6,7 +6,9 @@ function Skills() {
     <section id="habilidades">
       <SectionSeparator />
 
-      <h2 className="map-section-title reveal">Habilidades Técnicas</h2>
+      <h2 className="map-section-title long-section-title reveal">
+        <span>Habilidades Técnicas</span>
+      </h2>
       <p className="section-subline reveal">— Tecnologías, herramientas y competencias digitales —</p>
 
       <div className="skills-block reveal">

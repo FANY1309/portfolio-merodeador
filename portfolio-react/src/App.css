@@ -211,6 +211,11 @@
       opacity: 0;
       animation: fadeUp 0.8s ease 1.2s forwards, bounce 2s ease 2s infinite;
       margin-top: 1rem;
+      text-decoration: none;
+    }
+    .scroll-ribbon:focus-visible {
+      outline: 2px solid var(--seal-gold);
+      outline-offset: 5px;
     }
     @keyframes bounce {
       0%,100% { transform: translateY(0); }
@@ -242,6 +247,10 @@
 
     /* ─── SECTION HEADERS (map location style) ─────────── */
     .map-section-title {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5em;
       font-family: 'Cinzel Decorative', cursive;
       font-size: clamp(1.95rem, 4vw, 2.9rem);
       color: var(--ink);
@@ -251,8 +260,8 @@
     }
     .map-section-title::before, .map-section-title::after {
       content: '✦';
+      flex: 0 0 auto;
       font-size: 0.8em;
-      margin: 0 0.5em;
       color: var(--seal-gold);
     }
 
@@ -618,13 +627,22 @@
     }
     @media (max-width: 640px) {
       .two-col { grid-template-columns: 1fr; }
+      .map-section-title {
+        gap: 0.5em;
+      }
+      .long-section-title {
+        font-size: clamp(1.65rem, 8vw, 2.1rem);
+      }
+      .long-section-title span {
+        max-width: 240px;
+      }
       #main-nav {
-        align-items: stretch;
+        justify-content: flex-end;
+        align-items: center;
         padding: 0.5rem 0.75rem;
       }
       .nav-toggle {
         display: inline-flex;
-        align-self: flex-end;
         align-items: center;
         justify-content: center;
         width: 44px;
@@ -634,35 +652,54 @@
         border-radius: 4px;
         background: transparent;
         color: var(--parchment-dark);
+        position: relative;
+        z-index: 2;
       }
       .nav-toggle:focus-visible {
         outline: 2px solid var(--seal-gold);
         outline-offset: 2px;
       }
       .nav-toggle-icon {
-        display: flex;
+        position: relative;
+        display: block;
         width: 22px;
-        flex-direction: column;
-        gap: 5px;
+        height: 16px;
       }
       .nav-toggle-icon span {
         display: block;
+        position: absolute;
+        left: 0;
         width: 100%;
         height: 2px;
         border-radius: 2px;
         background: currentColor;
-        transition: transform 0.25s ease, opacity 0.2s ease;
+        transition: top 0.25s ease, transform 0.25s ease, opacity 0.2s ease;
+      }
+      .nav-toggle-icon span:nth-child(1) {
+        top: 0;
+      }
+      .nav-toggle-icon span:nth-child(2) {
+        top: 7px;
+      }
+      .nav-toggle-icon span:nth-child(3) {
+        top: 14px;
       }
       #main-nav.menu-open .nav-toggle-icon span:nth-child(1) {
-        transform: translateY(7px) rotate(45deg);
+        top: 7px;
+        transform: rotate(45deg);
       }
       #main-nav.menu-open .nav-toggle-icon span:nth-child(2) {
         opacity: 0;
       }
       #main-nav.menu-open .nav-toggle-icon span:nth-child(3) {
-        transform: translateY(-7px) rotate(-45deg);
+        top: 7px;
+        transform: rotate(-45deg);
       }
       .main-nav-links {
+        position: absolute;
+        top: calc(100% + 0.35rem);
+        right: 0.75rem;
+        width: min(290px, calc(100vw - 1.5rem));
         max-height: 0;
         flex-direction: column;
         gap: 0;
@@ -670,11 +707,15 @@
         opacity: 0;
         visibility: hidden;
         pointer-events: none;
+        background: rgba(43,26,14,0.97);
+        border: 1px solid rgba(201,176,122,0.35);
+        border-radius: 4px;
+        box-shadow: 0 10px 28px rgba(20,10,4,0.28);
         transition: max-height 0.3s ease, opacity 0.2s ease, padding 0.3s ease;
       }
       #main-nav.menu-open .main-nav-links {
         max-height: 360px;
-        padding: 0.4rem 0 0.65rem;
+        padding: 0.45rem 0;
         opacity: 1;
         visibility: visible;
         pointer-events: auto;
@@ -685,9 +726,9 @@
       }
       #main-nav a {
         width: 100%;
-        padding: 0.7rem 1rem;
+        padding: 0.75rem 1rem;
         font-size: 1.05rem;
-        text-align: center;
+        text-align: right;
       }
       #main-nav .sep {
         display: none;

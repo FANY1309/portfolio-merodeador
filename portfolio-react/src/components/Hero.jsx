@@ -43,7 +43,9 @@ function Hero() {
         <em>Front-end · Full-stack · Orientada al detalle</em>
       </p>
 
-      <p className="scroll-ribbon">↓ &nbsp; Explorar portfolio &nbsp; ↓</p>
+      <a className="scroll-ribbon" href="#sobre-mi">
+        ↓ &nbsp; Explorar portfolio &nbsp; ↓
+      </a>
     </section>
   );
 }
