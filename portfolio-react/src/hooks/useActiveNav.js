@@ -5,7 +5,7 @@ function useActiveNav(enabled = true) {
     if (!enabled) return undefined;
 
     const sections = document.querySelectorAll('section[id]');
-    const navLinks = document.querySelectorAll('nav a');
+    const navLinks = document.querySelectorAll('#main-nav a');
 
     const navObserver = new IntersectionObserver(
       (entries) => {
@@ -15,7 +15,7 @@ function useActiveNav(enabled = true) {
               link.style.borderColor = 'transparent';
             });
 
-            const active = document.querySelector(`nav a[href="#${entry.target.id}"]`);
+            const active = document.querySelector(`#main-nav a[href="#${entry.target.id}"]`);
             if (active) active.style.borderColor = 'var(--seal-gold)';
           }
         });
