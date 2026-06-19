@@ -34,6 +34,15 @@ export const projects = [
       'Desarrollo integral de la web corporativa: análisis, diseño de interfaz, maquetación responsive, integración de formularios, optimización SEO y despliegue en producción.',
   },
   {
+    tag: 'Proyecto Final de Ciclo · 2026',
+    title: "Who's That Pokémon — Juego de Adivinanzas",
+    period: 'PHP · JavaScript · MySQL · PokeAPI · Diseño responsive',
+    url: 'https://github.com/FANY1309/DAW_PRW_WTP',
+    linkLabel: 'Ver repositorio',
+    description:
+      'Aplicación web inspirada en Wordle y “Who’s That Pokémon”, con un reto diario para descubrir el Pokémon mediante pistas progresivas. Incluye registro e inicio de sesión, ranking global, gestión de partidas y un panel de administración para sincronizar Pokémon desde PokeAPI y crear nuevos retos.',
+  },
+  {
     tag: 'Proyecto CAT-U · 2023',
     title: 'CAT-U — Landing Page Interactiva',
     period: 'HTML · CSS · JavaScript · Diseño responsive',
