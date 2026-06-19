@@ -13,46 +13,63 @@ function Contact() {
       <p className="section-subline reveal">— Disponible para oportunidades y colaboraciones —</p>
 
       <div className="contact-list reveal">
-        <div className="contact-item">
-          <span className="contact-icon">✉</span>
-          <span className="contact-text">
-            <a href={gmailUrl} target="_blank" rel="noreferrer" aria-label={`Escribir a ${contactInfo.email} en Gmail`}>
-              {contactInfo.email}
-            </a>
+        <a
+          className="contact-button"
+          href={gmailUrl}
+          target="_blank"
+          rel="noreferrer"
+          aria-label={`Escribir a ${contactInfo.email} en Gmail`}
+        >
+          <span className="contact-button-icon" aria-hidden="true">✉</span>
+          <span className="contact-button-text">
+            <strong>Enviar un correo</strong>
+            <small>{contactInfo.email}</small>
           </span>
-        </div>
-        <div className="contact-item">
-          <span className="contact-icon">☎</span>
-          <span className="contact-text contact-phone">
-            <a href={`tel:${contactInfo.phoneInternational}`} aria-label={`Llamar al ${contactInfo.phoneLabel}`}>
-              {contactInfo.phoneLabel}
-            </a>
-            <span className="contact-actions">
-              <a
-                href={whatsappUrl}
-                target="_blank"
-                rel="noreferrer"
-                aria-label={`Escribir por WhatsApp al ${contactInfo.phoneLabel}`}
-              >
-                WhatsApp
-              </a>
-              <a
-                href={`tel:${contactInfo.phoneInternational}`}
-                aria-label={`Llamar al ${contactInfo.phoneLabel}`}
-              >
-                Llamar
-              </a>
-            </span>
+          <span className="contact-button-arrow" aria-hidden="true">›</span>
+        </a>
+
+        <a
+          className="contact-button"
+          href={`tel:${contactInfo.phoneInternational}`}
+          aria-label={`Llamar al ${contactInfo.phoneLabel}`}
+        >
+          <span className="contact-button-icon" aria-hidden="true">☎</span>
+          <span className="contact-button-text">
+            <strong>Llamar ahora</strong>
+            <small>{contactInfo.phoneLabel}</small>
           </span>
-        </div>
-        <div className="contact-item">
-          <span className="contact-icon">⌥</span>
-          <span className="contact-text">
-            <a href="https://github.com/FANY1309" target="_blank" rel="noreferrer">
-              github.com/FANY1309
-            </a>
+          <span className="contact-button-arrow" aria-hidden="true">›</span>
+        </a>
+
+        <a
+          className="contact-button contact-button-whatsapp"
+          href={whatsappUrl}
+          target="_blank"
+          rel="noreferrer"
+          aria-label={`Escribir por WhatsApp al ${contactInfo.phoneLabel}`}
+        >
+          <span className="contact-button-icon" aria-hidden="true">☏</span>
+          <span className="contact-button-text">
+            <strong>Abrir WhatsApp</strong>
+            <small>{contactInfo.phoneLabel}</small>
           </span>
-        </div>
+          <span className="contact-button-arrow" aria-hidden="true">›</span>
+        </a>
+
+        <a
+          className="contact-button"
+          href="https://github.com/FANY1309"
+          target="_blank"
+          rel="noreferrer"
+          aria-label="Visitar el perfil de GitHub de FANY1309"
+        >
+          <span className="contact-button-icon" aria-hidden="true">⌘</span>
+          <span className="contact-button-text">
+            <strong>Visitar GitHub</strong>
+            <small>github.com/FANY1309</small>
+          </span>
+          <span className="contact-button-arrow" aria-hidden="true">›</span>
+        </a>
       </div>
     </section>
   );

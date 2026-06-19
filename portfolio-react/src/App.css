@@ -153,7 +153,7 @@
     /* ─── SECTIONS ────────────────────────────────────── */
     section {
       position: relative;
-      padding: 5rem 2rem;
+      padding: 5rem 2.5rem;
       max-width: 900px;
       margin: 0 auto;
       z-index: 1;
@@ -439,53 +439,107 @@
 
     /* ─── CONTACT SECTION ─────────────────────────────── */
     .contact-list {
-      display: flex;
-      flex-direction: column;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 1rem;
-      max-width: 420px;
+      max-width: 760px;
       margin: 0 auto;
     }
-    .contact-item {
+    .contact-button {
+      position: relative;
       display: flex;
       align-items: center;
-      gap: 1rem;
-      border-bottom: 1px dashed rgba(43,26,14,0.25);
-      padding-bottom: 0.8rem;
-    }
-    .contact-icon {
-      font-size: 1.4rem;
-      width: 28px;
-      text-align: center;
-      color: var(--seal-red);
-    }
-    .contact-text {
-      font-family: 'IM Fell English', serif;
-      font-size: 1.15rem;
-      color: var(--ink);
-    }
-    .contact-text a {
+      gap: 0.85rem;
+      min-height: 88px;
+      padding: 0.9rem 2.6rem 0.9rem 0.9rem;
+      border: 1px solid rgba(43,26,14,0.38);
+      background:
+        linear-gradient(135deg, rgba(255,246,211,0.34), rgba(184,134,11,0.08)),
+        rgba(232,213,163,0.3);
+      box-shadow:
+        3px 3px 0 rgba(43,26,14,0.14),
+        inset 0 0 0 3px rgba(232,213,163,0.28);
       color: var(--ink);
       text-decoration: none;
-      border-bottom: 1px solid rgba(43,26,14,0.3);
-      transition: border-color 0.2s;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
     }
-    .contact-text a:hover {
-      border-color: var(--seal-red);
+    .contact-button::before {
+      content: '';
+      position: absolute;
+      inset: 5px;
+      border: 1px dashed rgba(43,26,14,0.16);
+      pointer-events: none;
     }
-    .contact-phone {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: 0.45rem 0.9rem;
+    .contact-button:hover {
+      transform: translateY(-3px);
+      border-color: var(--seal-gold);
+      box-shadow:
+        5px 6px 0 rgba(43,26,14,0.16),
+        inset 0 0 0 3px rgba(232,213,163,0.34);
     }
-    .contact-actions {
+    .contact-button:focus-visible {
+      outline: 2px solid var(--seal-red);
+      outline-offset: 4px;
+    }
+    .contact-button-icon {
+      position: relative;
+      z-index: 1;
       display: inline-flex;
-      gap: 0.75rem;
-      font-size: 1rem;
+      flex: 0 0 46px;
+      width: 46px;
+      height: 46px;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid rgba(122,28,28,0.75);
+      border-radius: 50%;
+      background: radial-gradient(circle, #9b3028 0%, var(--seal-red) 62%, #4a1010 100%);
+      box-shadow: 2px 2px 0 rgba(43,26,14,0.25), inset 0 0 0 2px rgba(248,231,183,0.2);
+      color: #f8e7b7;
+      font-size: 1.35rem;
+      text-align: center;
     }
-    .contact-actions a {
+    .contact-button-whatsapp .contact-button-icon {
+      background: radial-gradient(circle, #4e7650 0%, #284d32 65%, #17301f 100%);
+      border-color: rgba(40,77,50,0.85);
+    }
+    .contact-button-text {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      min-width: 0;
+      flex-direction: column;
+      gap: 0.2rem;
+      font-family: 'IM Fell English', serif;
+    }
+    .contact-button-text strong {
+      font-family: 'Almendra', serif;
+      font-size: 1.2rem;
+      line-height: 1.1;
+      color: var(--ink);
+    }
+    .contact-button-text small {
+      overflow-wrap: anywhere;
+      color: var(--ink-light);
+      font-size: 0.98rem;
+      line-height: 1.25;
+    }
+    .contact-button-arrow {
+      position: absolute;
+      z-index: 1;
+      top: 50%;
+      right: 1rem;
+      display: inline-flex;
+      width: 24px;
+      height: 24px;
+      align-items: center;
+      justify-content: center;
       color: var(--seal-red);
-      font-weight: 700;
+      font-size: 1.8rem;
+      transform: translateY(-52%);
+      transition: transform 0.2s ease;
+    }
+    .contact-button:hover .contact-button-arrow {
+      transform: translate(3px, -52%);
     }
 
     /* ─── FOOTER INSCRIPTION ──────────────────────────── */
@@ -635,6 +689,12 @@
       }
       .long-section-title span {
         max-width: 240px;
+      }
+      .contact-list {
+        grid-template-columns: 1fr;
+      }
+      .contact-button {
+        min-height: 82px;
       }
       #main-nav {
         justify-content: flex-end;
