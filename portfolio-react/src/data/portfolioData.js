@@ -6,6 +6,23 @@ export const navItems = [
   { href: '#contacto', label: 'Contacto' },
 ];
 
+export const contactInfo = {
+  email: 'estefania.marhen@gmail.com',
+  phoneLabel: '682 812 311',
+  phoneInternational: '+34682812311',
+};
+
+export const socialLinks = [
+  {
+    label: 'GitHub',
+    href: 'https://github.com/FANY1309',
+  },
+  {
+    label: 'LinkedIn',
+    href: 'https://www.linkedin.com/in/estefaniamarhen',
+  },
+];
+
 export const projects = [
   {
     tag: 'CONSULTING GATECA S.L. · Prácticas FCT · 370h',
@@ -17,11 +34,22 @@ export const projects = [
       'Desarrollo integral de la web corporativa: análisis, diseño de interfaz, maquetación responsive, integración de formularios, optimización SEO y despliegue en producción.',
   },
   {
-    tag: 'Proyecto CAT-U · 2022',
-    title: 'Landing Page Interactiva & Juego Web',
-    period: 'HTML · CSS · JavaScript · Metodología Agile',
+    tag: 'Proyecto CAT-U · 2023',
+    title: 'CAT-U — Landing Page Interactiva',
+    period: 'HTML · CSS · JavaScript · Diseño responsive',
+    url: 'https://cat-u-2023.github.io/project-cat/',
+    linkLabel: 'Ver landing page',
     description:
-      'Diseño y desarrollo de una landing page interactiva y un juego web, participando en todas las fases del proyecto bajo metodología Agile y tecnologías del lado del cliente.',
+      'Diseño y desarrollo de la landing page de CAT-U, creada para presentar el proyecto, su identidad visual y las características principales del juego de forma atractiva e interactiva.',
+  },
+  {
+    tag: 'Proyecto CAT-U · 2023',
+    title: 'CAT-U Game — Juego Infantil Web',
+    period: 'HTML · CSS · JavaScript · Canvas · Metodología Agile',
+    url: 'https://cat-u-2023.github.io/cat-u-game/',
+    linkLabel: 'Jugar a CAT-U',
+    description:
+      'Juego infantil en el que se cuida a un gatito virtual y se interactúa con él mediante distintas actividades. Incluye varios minijuegos, entre ellos una versión de Pong desarrollada con Canvas.',
   },
 ];
 

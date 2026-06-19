@@ -1,6 +1,10 @@
 import SectionSeparator from './SectionSeparator';
+import { contactInfo } from '../data/portfolioData';
 
 function Contact() {
+  const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(contactInfo.email)}`;
+  const whatsappUrl = `https://wa.me/${contactInfo.phoneInternational.replace(/\D/g, '')}`;
+
   return (
     <section id="contacto">
       <SectionSeparator />
@@ -12,12 +16,34 @@ function Contact() {
         <div className="contact-item">
           <span className="contact-icon">✉</span>
           <span className="contact-text">
-            <a href="mailto:estefania.marhen@gmail.com">estefania.marhen@gmail.com</a>
+            <a href={gmailUrl} target="_blank" rel="noreferrer" aria-label={`Escribir a ${contactInfo.email} en Gmail`}>
+              {contactInfo.email}
+            </a>
           </span>
         </div>
         <div className="contact-item">
           <span className="contact-icon">☎</span>
-          <span className="contact-text">682 812 311</span>
+          <span className="contact-text contact-phone">
+            <a href={`tel:${contactInfo.phoneInternational}`} aria-label={`Llamar al ${contactInfo.phoneLabel}`}>
+              {contactInfo.phoneLabel}
+            </a>
+            <span className="contact-actions">
+              <a
+                href={whatsappUrl}
+                target="_blank"
+                rel="noreferrer"
+                aria-label={`Escribir por WhatsApp al ${contactInfo.phoneLabel}`}
+              >
+                WhatsApp
+              </a>
+              <a
+                href={`tel:${contactInfo.phoneInternational}`}
+                aria-label={`Llamar al ${contactInfo.phoneLabel}`}
+              >
+                Llamar
+              </a>
+            </span>
+          </span>
         </div>
         <div className="contact-item">
           <span className="contact-icon">⌥</span>

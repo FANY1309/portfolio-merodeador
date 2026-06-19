@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import About from './About';
 import Contact from './Contact';
 import CornerDecorations from './CornerDecorations';
@@ -26,5 +27,9 @@ function MapContainer({ isOpen }) {
     </div>
   );
 }
+
+MapContainer.propTypes = {
+  isOpen: PropTypes.bool.isRequired,
+};
 
 export default MapContainer;

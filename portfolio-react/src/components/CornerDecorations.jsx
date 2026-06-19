@@ -1,3 +1,5 @@
+import PropTypes from 'prop-types';
+
 function CornerSvg({ showNorth = false }) {
   return (
     <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -16,6 +18,10 @@ function CornerSvg({ showNorth = false }) {
     </svg>
   );
 }
+
+CornerSvg.propTypes = {
+  showNorth: PropTypes.bool,
+};
 
 function CornerDecorations() {
   return (

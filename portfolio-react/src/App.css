@@ -22,7 +22,6 @@
       font-size: 18px;
       color: var(--ink);
       overflow-x: hidden;
-      cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20'%3E%3Ccircle cx='10' cy='10' r='3' fill='%232b1a0e'/%3E%3C/svg%3E") 10 10, auto;
     }
 
     /* ─── NOISE / TEXTURE OVERLAY ─────────────────────── */
@@ -464,6 +463,21 @@
     .contact-text a:hover {
       border-color: var(--seal-red);
     }
+    .contact-phone {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.45rem 0.9rem;
+    }
+    .contact-actions {
+      display: inline-flex;
+      gap: 0.75rem;
+      font-size: 1rem;
+    }
+    .contact-actions a {
+      color: var(--seal-red);
+      font-weight: 700;
+    }
 
     /* ─── FOOTER INSCRIPTION ──────────────────────────── */
     .map-footer {
@@ -475,6 +489,50 @@
       color: rgba(43,26,14,0.45);
       letter-spacing: 0.08em;
       border-top: 1px solid rgba(43,26,14,0.15);
+    }
+    .map-footer p + p {
+      margin-top: 0.35rem;
+    }
+    .footer-nav,
+    .footer-social {
+      position: static;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.65rem 1.25rem;
+      padding: 0;
+      background: none;
+      backdrop-filter: none;
+    }
+    .footer-nav {
+      margin-bottom: 1rem;
+    }
+    .footer-social {
+      margin-bottom: 1.35rem;
+    }
+    .footer-nav a,
+    .footer-social a {
+      padding: 0.2rem;
+      border: 0;
+      border-bottom: 1px solid rgba(43,26,14,0.3);
+      color: var(--ink);
+      font-family: 'IM Fell English', serif;
+      font-size: 1rem;
+      font-style: normal;
+      letter-spacing: 0.04em;
+      text-decoration: none;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .footer-social a {
+      color: var(--seal-red);
+      font-weight: 700;
+    }
+    .footer-nav a:hover,
+    .footer-nav a:focus-visible,
+    .footer-social a:hover,
+    .footer-social a:focus-visible {
+      color: var(--seal-red);
+      border-color: var(--seal-red);
     }
 
     /* ─── NAV ─────────────────────────────────────────── */
@@ -539,23 +597,6 @@
     .reveal.visible {
       opacity: 1;
       transform: translateY(0);
-    }
-
-    /* ─── FOOTSTEP TRAIL ──────────────────────────────── */
-    .footstep {
-      position: fixed;
-      pointer-events: none;
-      font-size: 14px;
-      opacity: 0;
-      z-index: 9998;
-      color: var(--ink-light);
-      transition: opacity 0.1s;
-      animation: fadeFootstep 1.5s ease forwards;
-      transform-origin: center;
-    }
-    @keyframes fadeFootstep {
-      0%   { opacity: 0.5; transform: scale(1); }
-      100% { opacity: 0;   transform: scale(0.5) translateY(-10px); }
     }
 
     /* ─── TWO-COL GRID ────────────────────────────────── */

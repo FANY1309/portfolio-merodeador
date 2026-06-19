@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { navItems } from '../data/portfolioData';
 
 function NavBar({ isOpen }) {
@@ -12,5 +13,9 @@ function NavBar({ isOpen }) {
     </nav>
   );
 }
+
+NavBar.propTypes = {
+  isOpen: PropTypes.bool.isRequired,
+};
 
 export default NavBar;

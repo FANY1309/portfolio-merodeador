@@ -454,23 +454,6 @@
       transform: translateY(0);
     }
 
-    /* ─── FOOTSTEP TRAIL ──────────────────────────────── */
-    .footstep {
-      position: fixed;
-      pointer-events: none;
-      font-size: 14px;
-      opacity: 0;
-      z-index: 9998;
-      color: var(--ink-light);
-      transition: opacity 0.1s;
-      animation: fadeFootstep 1.5s ease forwards;
-      transform-origin: center;
-    }
-    @keyframes fadeFootstep {
-      0%   { opacity: 0.5; transform: scale(1); }
-      100% { opacity: 0;   transform: scale(0.5) translateY(-10px); }
-    }
-
     /* ─── TWO-COL GRID ────────────────────────────────── */
     .two-col {
       display: grid;
@@ -917,21 +900,6 @@
   }, { threshold: 0.12 });
 
   reveals.forEach(el => revealObserver.observe(el));
-
-  /* ── FOOTSTEP TRAIL ────────────────────────── */
-  let stepCount = 0;
-  const footSymbols = ['·', '∙', '•', '◦'];
-  document.addEventListener('mousemove', (e) => {
-    stepCount++;
-    if (stepCount % 8 !== 0) return;
-    const dot = document.createElement('span');
-    dot.className = 'footstep';
-    dot.textContent = footSymbols[Math.floor(Math.random() * footSymbols.length)];
-    dot.style.left = e.clientX + 'px';
-    dot.style.top  = e.clientY + 'px';
-    document.body.appendChild(dot);
-    setTimeout(() => dot.remove(), 1500);
-  });
 
   /* ── ACTIVE NAV ────────────────────────────── */
   const sections = document.querySelectorAll('section[id]');

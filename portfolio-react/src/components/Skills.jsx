@@ -11,11 +11,11 @@ function Skills() {
 
       <div className="skills-block reveal">
         <h3 className="skills-block-title">Hard Skills</h3>
-        <div className="skills-compass">
+        <div className="skills-tag-list">
           {skills.map((skill) => (
-            <div className="skill-rune" key={skill}>
+            <span className="soft-skill-item" key={skill}>
               {skill}
-            </div>
+            </span>
           ))}
         </div>
       </div>

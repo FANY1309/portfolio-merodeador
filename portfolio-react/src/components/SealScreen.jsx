@@ -1,3 +1,5 @@
+import PropTypes from 'prop-types';
+
 function SealScreen({ isOpen, onOpen }) {
   return (
     <div
@@ -89,5 +91,10 @@ function SealScreen({ isOpen, onOpen }) {
     </div>
   );
 }
+
+SealScreen.propTypes = {
+  isOpen: PropTypes.bool.isRequired,
+  onOpen: PropTypes.func.isRequired,
+};
 
 export default SealScreen;

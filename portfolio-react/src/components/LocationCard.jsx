@@ -1,3 +1,5 @@
+import PropTypes from 'prop-types';
+
 function LocationCard({ tag, title, period, description, marker = '📍', url, linkLabel = 'Ver proyecto' }) {
   return (
     <div className="location-card reveal">
@@ -15,5 +17,15 @@ function LocationCard({ tag, title, period, description, marker = '📍', url, l
     </div>
   );
 }
+
+LocationCard.propTypes = {
+  tag: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
+  period: PropTypes.string,
+  description: PropTypes.string.isRequired,
+  marker: PropTypes.string,
+  url: PropTypes.string,
+  linkLabel: PropTypes.string,
+};
 
 export default LocationCard;
